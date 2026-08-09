@@ -1,0 +1,24 @@
+[Unit]
+Description=Embedded Real-Time Computer Vision Processing Service
+After=network.target multi-user.target
+Wants=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/usr/local/bin
+ExecStart=/usr/bin/python3 /usr/local/bin/cv_app.py
+Restart=always
+RestartSec=5s
+
+# Standard I/O directed to systemd journalctl
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=cv-app
+
+# Resource limits & safety
+CPUSchedulingPolicy=other
+Nice=0
+
+[Install]
+WantedBy=multi-user.target
